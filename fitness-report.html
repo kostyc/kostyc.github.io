@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Report Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input {
+            width: 50px;
+            text-transform: uppercase;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fitness Report Calculator</h1>
+    
+    <h2>Enter Report Data</h2>
+    <table id="reportTable">
+        <thead>
+            <tr>
+                <th>Report ID</th>
+                <th>RS ID</th>
+                <th>Grade</th>
+                <th>Attr1</th>
+                <th>Attr2</th>
+                <th>Attr3</th>
+                <th>Attr4</th>
+                <th>Attr5</th>
+                <th>Attr6</th>
+                <th>Attr7</th>
+                <th>Attr8</th>
+                <th>Attr9</th>
+                <th>Attr10</th>
+                <th>Attr11</th>
+                <th>Attr12</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" id="reportId1" value="001"></td>
+                <td><input type="text" id="rsId1" value="RS1"></td>
+                <td><input type="text" id="grade1" value="Capt"></td>
+                <td><input type="text" id="attr1_1" maxlength="1"></td>
+                <td><input type="text" id="attr2_1" maxlength="1"></td>
+                <td><input type="text" id="attr3_1" maxlength="1"></td>
+                <td><input type="text" id="attr4_1" maxlength="1"></td>
+                <td><input type="text" id="attr5_1" maxlength="1"></td>
+                <td><input type="text" id="attr6_1" maxlength="1"></td>
+                <td><input type="text" id="attr7_1" maxlength="1"></td>
+                <td><input type="text" id="attr8_1" maxlength="1"></td>
+                <td><input type="text" id="attr9_1" maxlength="1"></td>
+                <td><input type="text" id="attr10_1" maxlength="1"></td>
+                <td><input type="text" id="attr11_1" maxlength="1"></td>
+                <td><input type="text" id="attr12_1" maxlength="1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="reportId2" value="002"></td>
+                <td><input type="text" id="rsId2" value="RS1"></td>
+                <td><input type="text" id="grade2" value="Capt"></td>
+                <td><input type="text" id="attr1_2" maxlength="1"></td>
+                <td><input type="text" id="attr2_2" maxlength="1"></td>
+                <td><input type="text" id="attr3_2" maxlength="1"></td>
+                <td><input type="text" id="attr4_2" maxlength="1"></td>
+                <td><input type="text" id="attr5_2" maxlength="1"></td>
+                <td><input type="text" id="attr6_2" maxlength="1"></td>
+                <td><input type="text" id="attr7_2" maxlength="1"></td>
+                <td><input type="text" id="attr8_2" maxlength="1"></td>
+                <td><input type="text" id="attr9_2" maxlength="1"></td>
+                <td><input type="text" id="attr10_2" maxlength="1"></td>
+                <td><input type="text" id="attr11_2" maxlength="1"></td>
+                <td><input type="text" id="attr12_2" maxlength="1"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="calculateReports()">Calculate</button>
+
+    <div id="results">
+        <h2>Results</h2>
+        <p><strong>Report Averages:</strong></p>
+        <p id="reportAvg"></p>
+        <p><strong>RS Profile:</strong></p>
+        <p id="rsProfile"></p>
+        <p><strong>Relative Values:</strong></p>
+        <p id="relativeValues"></p>
+    </div>
+
+    <script>
+        function calculateReports() {
+            // Conversion map for attributes (A=1, B=2, ..., H=0)
+            const gradeMap = { 'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 0 };
+
+            // Collect data from inputs
+            const reports = [
+                {
+                    reportId: document.getElementById('reportId1').value,
+                    rsId: document.getElementById('rsId1').value,
+                    grade: document.getElementById('grade1').value,
+                    attributes: [
+                        document.getElementById('attr1_1').value.toUpperCase(),
+                        document.getElementById('attr2_1').value.toUpperCase(),
+                        document.getElementById('attr3_1').value.toUpperCase(),
+                        document.getElementById('attr4_1').value.toUpperCase(),
+                        document.getElementById('attr5_1').value.toUpperCase(),
+                        document.getElementById('attr6_1').value.toUpperCase(),
+                        document.getElementById('attr7_1').value.toUpperCase(),
+                        document.getElementById('attr8_1').value.toUpperCase(),
+                        document.getElementById('attr9_1').value.toUpperCase(),
+                        document.getElementById('attr10_1').value.toUpperCase(),
+                        document.getElementById('attr11_1').value.toUpperCase(),
+                        document.getElementById('attr12_1').value.toUpperCase()
+                    ]
+                },
+                {
+                    reportId: document.getElementById('reportId2').value,
+                    rsId: document.getElementById('rsId2').value,
+                    grade: document.getElementById('grade2').value,
+                    attributes: [
+                        document.getElementById('attr1_2').value.toUpperCase(),
+                        document.getElementById('attr2_2').value.toUpperCase(),
+                        document.getElementById('attr3_2').value.toUpperCase(),
+                        document.getElementById('attr4_2').value.toUpperCase(),
+                        document.getElementById('attr5_2').value.toUpperCase(),
+                        document.getElementById('attr6_2').value.toUpperCase(),
+                        document.getElementById('attr7_2').value.toUpperCase(),
+                        document.getElementById('attr8_2').value.toUpperCase(),
+                        document.getElementById('attr9_2').value.toUpperCase(),
+                        document.getElementById('attr10_2').value.toUpperCase(),
+                        document.getElementById('attr11_2').value.toUpperCase(),
+                        document.getElementById('attr12_2').value.toUpperCase()
+                    ]
+                }
+            ];
+
+            // Calculate Report Averages
+            const reportAverages = reports.map(report => {
+                const values = report.attributes
+                    .filter(attr => attr !== '' && attr !== 'H') // Exclude empty or H
+                    .map(attr => gradeMap[attr] || 0); // Convert to numbers
+                const sum = values.reduce((a, b) => a + b, 0);
+                const count = values.length;
+                return count > 0 ? Number((sum / count).toFixed(2)) : 0;
+            });
+
+            // Calculate RS Profile (assuming same RS ID and Grade for simplicity)
+            const rsReports = reports.filter(r => r.rsId === reports[0].rsId && r.grade === reports[0].grade);
+            const rsAverages = rsReports.map((_, i) => reportAverages[i]);
+            const rsAvg = Number((rsAverages.reduce((a, b) => a + b, 0) / rsAverages.length).toFixed(2));
+            const rsHigh = Math.max(...rsAverages);
+            const rsLow = Math.min(...rsAverages);
+
+            // Calculate Relative Values
+            const relativeValues = reportAverages.map(avg => {
+                const rv = 90 + 10 * (avg - rsAvg) / (rsHigh - rsAvg);
+                return Math.max(80, Math.min(100, Number(rv.toFixed(2))));
+            });
+
+            // Display Results
+            document.getElementById('reportAvg').innerHTML = reports.map((r, i) => 
+                `${r.reportId}: ${reportAverages[i]}`).join('<br>');
+            document.getElementById('rsProfile').innerHTML = 
+                `RS ID: ${reports[0].rsId}, Grade: ${reports[0].grade}<br>` +
+                `RS Avg: ${rsAvg}<br>RS High: ${rsHigh}<br>RS Low: ${rsLow}`;
+            document.getElementById('relativeValues').innerHTML = reports.map((r, i) => 
+                `${r.reportId}: ${relativeValues[i]}`).join('<br>');
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
